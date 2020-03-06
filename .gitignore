@@ -1,3 +1,4 @@
 *.pth
 *.xml
 *.caffemodel
+azure_config.py

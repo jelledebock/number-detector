@@ -4,6 +4,7 @@ from azure.cognitiveservices.vision.computervision.models import TextOperationSt
 from azure.cognitiveservices.vision.computervision.models import TextRecognitionMode
 from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
+from lib.azure_config import endpoint, subscription_key
 
 from array import array
 import os
@@ -11,9 +12,6 @@ from PIL import Image
 import sys
 import time
 import sys
-
-subscription_key='blabla'
-endpoint = 'blabla
 
 def detect_image(local_image_path):
     computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
