@@ -14,6 +14,7 @@ from pose_estimation.pose.openpose.modules.pose import Pose, track_poses
 from pose_estimation.pose.openpose.val import normalize, pad_width
 from lib.text_detector import text_detection_filter, bib_detector
 
+from skimage.transform import rescale, resize, downscale_local_mean
 
 class ImageReader(object):
     def __init__(self, file_names):
@@ -94,7 +95,14 @@ def detect_numbers(net, image_provider, height_size, cpu, track, smooth):
     delay = 0
     for img in image_provider:
         print("Loading image")
+        if img.shape[0]>720:
+            factor = img.shape[0]/720
+            print('Downscaling with a factor ', factor)
+            img = cv2.resize(img, (int(img.shape[1]/factor), int(img.shape[0]/factor)), interpolation = cv2.INTER_CUBIC) 
         orig_img = img.copy()
+        print("Shape ")
+        print(orig_img.shape)
+
         heatmaps, pafs, scale, pad = infer_fast(net, img, height_size, stride, upsample_ratio, cpu)
 
         total_keypoints_num = 0
